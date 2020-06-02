@@ -1,3 +1,5 @@
+.vscode/
 .idea
 /data/*
 /docker/.env
+/docker/logs/nginx/error.log
