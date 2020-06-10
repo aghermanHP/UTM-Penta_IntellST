@@ -11,28 +11,38 @@ use Doctrine\ORM\Mapping as ORM;
 class User
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="int")
+     * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $firstname;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $lastname;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $email;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $password;

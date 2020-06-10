@@ -13,13 +13,17 @@ use Doctrine\ORM\Mapping as ORM;
 class Enterprise
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="int")
+     * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $name;
