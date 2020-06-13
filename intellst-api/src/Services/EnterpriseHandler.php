@@ -7,7 +7,6 @@ use App\DTO\EnterpriseDTO;
 use App\Transformer\EnterpriseTransformer;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\EnterpriseRepository;
-use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Entity\Enterprise;
@@ -45,13 +44,9 @@ class EnterpriseHandler
         $this->enterpriseRepository = $this->em->getRepository(Enterprise::class);
     }
 
-    public function updateEnterprise(EnterpriseDTO $dto, ?Enterprise $enterprise = null): ConstraintViolationListInterface
+    public function updateEnterprise(EnterpriseDTO $dto, Enterprise $enterprise): ConstraintViolationListInterface
     {
-        if ($enterprise === null) {
-            $group = 'UserAdd';
-        } else {
-            $group = 'UserEdit';
-        }
+        $group = 'EnterpriseEdit';
 
         $enterprise = $this->transformer->transformDTOToEntity($dto, $enterprise);
 

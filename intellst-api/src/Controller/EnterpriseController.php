@@ -42,39 +42,6 @@ class EnterpriseController extends AbstractController
     }
 
     /**
-     * @Route("/api/enterprise-register", name="enterprise_register", methods={"POST"})
-     * @Route("/api/enterprises", name="enterprises_add", methods={"POST"})
-     */
-    public function addEnterprise(Request $request): JsonResponse
-    {
-        $data = $request->getContent();
-
-        /** @var DeserializationContext $context */
-        $context = DeserializationContext::create()->setGroups(array('UserAdd'));
-
-        $addEnterpriseDTO = $this->serializer->deserialize(
-            $data,
-            EnterpriseDTO::class,
-            'json',
-            $context
-        );
-
-        $errors = $this->enterpriseHandler->updateEnterprise($addEnterpriseDTO);
-        if ($errors->count()) {
-            return new JsonResponse(
-                [
-                    'code' => Response::HTTP_BAD_REQUEST,
-                    'message' => 'Bad Request',
-                    'errors' => $this->validationErrorSerializer->serialize($errors),
-                ],
-                Response::HTTP_BAD_REQUEST
-            );
-        }
-
-        return new JsonResponse(['message' => 'Enterprise added successfully'], Response::HTTP_OK);
-    }
-
-    /**
      * @Route("/api/enterprises/{enterprise}", name="enterprise_edit", methods={"POST"})
      */
     public function editEnterprise(Request $request, Enterprise $enterprise): JsonResponse
@@ -82,7 +49,7 @@ class EnterpriseController extends AbstractController
         $data = $request->getContent();
 
         /** @var DeserializationContext $context */
-        $context = DeserializationContext::create()->setGroups(array('UserEdit'));
+        $context = DeserializationContext::create()->setGroups(array('EnterpriseEdit'));
 
         $editEnterpriseDTO = $this->serializer->deserialize(
             $data,
@@ -105,5 +72,4 @@ class EnterpriseController extends AbstractController
 
         return new JsonResponse(['message' => 'Enterprise successfully edited!'], Response::HTTP_OK);
     }
-
 }

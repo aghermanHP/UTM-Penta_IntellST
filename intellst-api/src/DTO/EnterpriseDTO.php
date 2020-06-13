@@ -4,6 +4,7 @@ namespace App\DTO;
 
 use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class EnterpriseDTO
 {
@@ -17,7 +18,6 @@ class EnterpriseDTO
 
     /**
      * @Serializer\Expose()
-     * @Groups({"EnterpriseAdd"})
      * @Serializer\SerializedName("name")
      * @Serializer\Type("string")
      * @var string
@@ -27,34 +27,35 @@ class EnterpriseDTO
 
     /**
      * @Serializer\Expose()
-     * @Groups({"EnterpriseAdd"})
      * @Serializer\SerializedName("users")
+     * @Assert\NotBlank
      */
     public $users;
 
     /**
      * @Serializer\Expose()
-     * @Groups({"EnterpriseAdd"})
+     * @Groups({"EnterpriseEdit"})
      * @Serializer\SerializedName("temperature")
      * @Serializer\Type("float")
      * @var float
-     * @Assert\NotBlank
+     * @Assert\NotBlank (groups={"EnterpriseEdit"})
      * @Assert\Range(
      *      min = 34,
      *      max = 38,
      *      minMessage = "Enter a higher value",
      *      maxMessage = "Enter a lower value",
+     *      groups={"EnterpriseEdit"}
      * )
      */
     public float $temperature;
 
     /**
      * @Serializer\Expose()
-     * @Groups({"EnterpriseAdd"})
+     * @Groups({"EnterpriseEdit"})
      * @Serializer\SerializedName("restrictionPeriod")
      * @Serializer\Type("integer")
      * @var integer
-     * @Assert\NotBlank
+     * @Assert\NotBlank (groups={"EnterpriseEdit"})
      */
     public int $restrictionPeriod;
 
