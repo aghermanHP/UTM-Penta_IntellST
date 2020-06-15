@@ -49,7 +49,7 @@ class EnterpriseController extends AbstractController
         $data = $request->getContent();
 
         /** @var DeserializationContext $context */
-        $context = DeserializationContext::create()->setGroups(array('EnterpriseEdit'));
+        $context = DeserializationContext::create();
 
         $editEnterpriseDTO = $this->serializer->deserialize(
             $data,
