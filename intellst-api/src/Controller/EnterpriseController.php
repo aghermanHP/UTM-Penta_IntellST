@@ -48,14 +48,10 @@ class EnterpriseController extends AbstractController
     {
         $data = $request->getContent();
 
-        /** @var DeserializationContext $context */
-        $context = DeserializationContext::create();
-
         $editEnterpriseDTO = $this->serializer->deserialize(
             $data,
             EnterpriseDTO::class,
-            'json',
-            $context
+            'json'
         );
 
         $errors = $this->enterpriseHandler->updateEnterprise($editEnterpriseDTO, $enterprise);

@@ -38,7 +38,7 @@ class EnterpriseDTO
      *      min = 34,
      *      max = 38,
      *      minMessage = "Enter a higher value",
-     *      maxMessage = "Enter a lower value",
+     *      maxMessage = "Enter a lower value"
      * )
      */
     public float $temperature;
