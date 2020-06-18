@@ -70,7 +70,7 @@ class IdentifiedCaseController extends AbstractController
     }
 
     /**
-     * @Route("/api/identified-case", name="add_identified_case", methods={"GET"})
+     * @Route("/api/identified-case", name="show_list_identified_case", methods={"GET"})
      */
     public function listIdentifiedCase(): JsonResponse
     {

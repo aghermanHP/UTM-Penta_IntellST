@@ -11,7 +11,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class IdentifiedCaseHandler
 {
-
     /** @var EntityManagerInterface */
     private $em;
 
@@ -30,7 +29,6 @@ class IdentifiedCaseHandler
         $this->validator = $validator;
         $this->identifiedCaseTransformer = $identifiedCaseTransformer;
         $this->identifiedCaseRepository = $this->em->getRepository(IdentifiedCase::class);
-
     }
 
     public function updateIdentifiedCase(IdentifiedCaseDTO $dto): ConstraintViolationListInterface

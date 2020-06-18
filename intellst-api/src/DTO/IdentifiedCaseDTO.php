@@ -44,5 +44,4 @@ class IdentifiedCaseDTO
      * @Serializer\SerializedName("firstDate")
      */
     public DateTime $firstDate;
-
 }
