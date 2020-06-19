@@ -9,7 +9,6 @@ class UserDTO
 {
      /**
      * User ID
-     * @var integer
      * @Serializer\Type("integer")
      * @Serializer\Expose()
      * @Serializer\SerializedName("ID")
@@ -18,7 +17,6 @@ class UserDTO
 
     /**
      * The firstname of User
-     * @var string
      * @Serializer\Type("string")
      * @Assert\NotBlank
      * @Assert\Length(
@@ -34,7 +32,6 @@ class UserDTO
 
     /**
      * The lastname of User
-     * @var string
      * @Serializer\Type("string")
      * @Assert\NotBlank(groups={"UserAdd"})
      * @Assert\Length(
@@ -50,7 +47,6 @@ class UserDTO
 
     /**
      * User email
-     * @var string
      * @Serializer\Type("string")
      * @Assert\NotBlank
      * @Assert\Email(
@@ -60,9 +56,9 @@ class UserDTO
      * @Serializer\SerializedName("email")
      */
     public string $email;
+
     /**
      * Password
-     * @var string
      * @Serializer\Type("string")
      * @Serializer\Expose()
      * @Assert\NotNull
@@ -76,12 +72,10 @@ class UserDTO
 
     /**
      * The enterprise
-     * @var string
      * @Serializer\Type("string")
      * @Assert\NotBlank
      * @Serializer\Expose()
      * @Serializer\SerializedName("enterprise")
      */
     public $enterprise;
-
 }

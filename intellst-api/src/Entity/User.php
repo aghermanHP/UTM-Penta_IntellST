@@ -2,69 +2,109 @@
 
 namespace App\Entity;
 
+use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Table(name="users")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass=UserRepository::class)
  */
-class User implements UserInterface
+class User
 {
     /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @ORM\Column(type="string", length=25, unique=true)
+     * @ORM\Column(type="string", length=255)
      */
-    private $username;
+    private string $firstname;
 
     /**
-     * @ORM\Column(type="string", length=500)
+     * @ORM\Column(type="string", length=255)
      */
-    private $password;
+    private string $lastname;
 
     /**
-     * @ORM\Column(name="is_active", type="boolean")
+     * @ORM\Column(type="string", length=255)
      */
-    private $isActive;
+    private string $email;
 
-    public function __construct($username)
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private string $password;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Enterprise::class, inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $enterprise;
+
+    public function getId(): ?int
     {
-        $this->isActive = true;
-        $this->username = $username;
+        return $this->id;
     }
 
-    public function getUsername()
+    public function getFirstname(): ?string
     {
-        return $this->username;
+        return $this->firstname;
     }
 
-    public function getSalt()
+    public function setFirstname(string $firstname): self
     {
-        return null;
+        $this->firstname = $firstname;
+
+        return $this;
     }
 
-    public function getPassword()
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(string $lastname): self
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setPassword($password)
+    public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
     }
 
-    public function getRoles()
+    public function getEnterprise(): ?Enterprise
     {
-        return array('ROLE_USER');
+        return $this->enterprise;
     }
 
-    public function eraseCredentials()
+    public function setEnterprise(?Enterprise $enterprise): self
     {
+        $this->enterprise = $enterprise;
+
+        return $this;
     }
 }

@@ -3,3 +3,5 @@
 /data/*
 /docker/.env
 /docker/logs/nginx/error.log
+/docker/logs/nginx/symfony_access.log
+intellst-api/config/jwt/private.pem-back
