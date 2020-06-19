@@ -24,7 +24,6 @@ class Enterprise
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @var string
      * @Assert\NotBlank
      */
     private string $name;
@@ -37,7 +36,6 @@ class Enterprise
 
     /**
      * @ORM\Column(type="float")
-     * @var float
      * @Assert\NotBlank
      * @Assert\Range(
      *      min = 34,
@@ -50,7 +48,6 @@ class Enterprise
 
     /**
      * @ORM\Column(type="integer")
-     * @var integer
      * @Assert\NotBlank
      */
     private int $restrictionPeriod;
