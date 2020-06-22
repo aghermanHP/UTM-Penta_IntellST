@@ -84,6 +84,10 @@ class User
         return $this;
     }
 
+    public function eraseCredentials()
+    {
+    }
+
     public function getPassword(): ?string
     {
         return $this->password;

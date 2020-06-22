@@ -5,28 +5,30 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Entity\User;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\Register;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AuthController extends AbstractController
 {
     /**
+     * AuthController constructor.
+     * @param Register $register
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
+     */
+
+    public function __construct( Register $register, Request $request, UserPasswordEncoderInterface $encoder) {
+        $this->register = $register;
+        $this->request = $request;
+        $this->encoder = $encoder;
+    }
+    /**
      * @Route("/register", methods={"POST"})
      */
-    public function register(Request $request, UserPasswordEncoderInterface $encoder) : string
+    public function register():string
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $username = $request->request->get('username');
-        $password = $request->request->get('password');
-
-        $user = new User($username);
-        $user->setPassword($encoder->encodePassword($user, $password));
-        $em->persist($user);
-        $em->flush();
-
-        return new Response(sprintf('User %s successfully created', $user->getUsername()));
+        $this->register->register( $this->request, $this->encoder );
     }
 
     /**
