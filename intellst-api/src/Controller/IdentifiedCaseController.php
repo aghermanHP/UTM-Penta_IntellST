@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\DTO\IdentifiedCaseDTO;
+use App\Entity\IdentifiedCase;
 use App\Services\IdentifiedCaseHandler;
 use JMS\Serializer\DeserializationContext;
 use JMS\Serializer\SerializerInterface;
@@ -77,5 +78,33 @@ class IdentifiedCaseController extends AbstractController
         $list = $this->identifiedCaseHandler->getList();
 
         return new JsonResponse($list);
+    }
+
+    /**
+     * @Route("/api/identified-case/{identified-case}", name="edit_allow_entrance", methods={"POST"})
+     */
+    public function editAllowEntrance(Request $request, IdentifiedCase $identifiedCase): JsonResponse
+    {
+        $data = $request->getContent();
+
+        $editAllowEntrance = $this->serializer->deserialize(
+            $data,
+            IdentifiedCaseDTO::class,
+            'json'
+        );
+
+        $errors = $this->identifiedCaseHandler->updateIdentifiedCaseAllowEntrance($editAllowEntrance,$identifiedCase);
+        if ($errors->count()) {
+            return new JsonResponse(
+                [
+                    'code' => Response::HTTP_BAD_REQUEST,
+                    'message' => 'Bad Request',
+                    'errors' => $this->validationErrorSerializer->serialize($errors),
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+
+        return new JsonResponse(['message' => 'Entry allowed successfully'], Response::HTTP_OK);
     }
 }

@@ -44,4 +44,12 @@ class IdentifiedCaseDTO
      * @Serializer\SerializedName("firstDate")
      */
     public DateTime $firstDate;
+
+    /**
+     * @Serializer\Expose()
+     * @Serializer\SerializedName("allowEntrance")
+     * @Serializer\Type("bool")
+     * @Assert\NotBlank
+     */
+    public bool $allowEntrance;
 }

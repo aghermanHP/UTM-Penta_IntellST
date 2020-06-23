@@ -42,6 +42,11 @@ class IdentifiedCase
      */
     private DateTime $firstDate;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private bool $allowEntrance;
+
     public function __construct()
     {
         $this->datePhoto = new DateTime();
@@ -95,5 +100,17 @@ class IdentifiedCase
     public function setFirstDate(DateTimeInterface $firstDate): void
     {
         $this->firstDate = $firstDate;
+    }
+
+    public function getAllowEntrance(): ?bool
+    {
+        return $this->allowEntrance;
+    }
+
+    public function setAllowEntrance(bool $allowEntrance): self
+    {
+        $this->allowEntrance = $allowEntrance;
+
+        return $this;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DTO\AllowEntranceDTO;
 use App\DTO\IdentifiedCaseDTO;
 use App\Entity\IdentifiedCase;
 use App\Transformer\IdentifiedCaseTransformer;
@@ -60,5 +61,24 @@ class IdentifiedCaseHandler
         }
 
         return $arr;
+    }
+
+    public function updateIdentifiedCaseAllowEntrance(AllowEntranceDTO $dto, IdentifiedCase $identifiedCase): ConstraintViolationListInterface
+    {
+        $identifiedCase = $this->identifiedCaseTransformer->transformDTOToEntityAllowEntrance($dto,$identifiedCase);
+
+        $errors = $this->validator->validate($identifiedCase);
+        $dtoErrors = $this->validator->validate($dto, null);
+
+        foreach ($dtoErrors as $error) {
+            $errors->add($error);
+        }
+
+        if ($errors->count() === 0) {
+            $this->em->persist($identifiedCase);
+            $this->em->flush();
+        }
+
+        return $errors;
     }
 }

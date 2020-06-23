@@ -2,6 +2,7 @@
 
 namespace App\Transformer;
 
+use App\DTO\AllowEntranceDTO;
 use App\DTO\IdentifiedCaseDTO;
 use App\Entity\IdentifiedCase;
 
@@ -14,6 +15,7 @@ class IdentifiedCaseTransformer
         $identifiedCase->setTemperature($dto->temperature);
         $identifiedCase->setDatePhoto(new \DateTime());
         $identifiedCase->setFirstDate(new \DateTime());
+        $identifiedCase->setTemperature($dto->allowEntrance);
 
         return $identifiedCase;
     }
@@ -26,7 +28,15 @@ class IdentifiedCaseTransformer
         $identifiedCaseDTO->temperature = $identifiedCase->getTemperature();
         $identifiedCaseDTO->datePhoto = $identifiedCase->getDatePhoto();
         $identifiedCaseDTO->firstDate = $identifiedCase->getFirstDate();
+        $identifiedCaseDTO->allowEntrance = $identifiedCase->getAllowEntrance();
 
         return $identifiedCaseDTO;
+    }
+
+    public function transformDTOToEntityAllowEntrance(AllowEntranceDTO $dto, IdentifiedCase $identifiedCase): IdentifiedCase
+    {
+        $identifiedCase->setAllowEntrance($dto->allowEntrance);
+
+        return $identifiedCase;
     }
 }
