@@ -3,22 +3,23 @@
 namespace App\Service;
 
 use App\Entity\User;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Doctrine\ORM\getDoctrine;
 
 
-class Register
+class Register extends AbstractController
 {
     /**
      * Register constructor.
-     * @param RequestStack $request
+     * @param RequestStack $requestStack
      * @param UserPasswordEncoderInterface $encoder
      */
-    public function __construct(RequestStack $request, UserPasswordEncoderInterface $encoder)
+    public function __construct(RequestStack $requestStack, UserPasswordEncoderInterface $encoder)
     {
-        $this->request = $request;
+        $this->requestStack = $requestStack;
         $this->encoder = $encoder;
     }
 
@@ -26,8 +27,8 @@ class Register
     {
         $em = $this->getDoctrine()->getManager();
 
-        $username = $this->request->request->get('username');
-        $password = $this->request->request->get('password');
+        $username = $this->requestStack->getCurrentRequest()->request->get('username');
+        $password = $this->requestStack->getCurrentRequest()->request->get('password');
 
         $user = new User($username);
         $user->setPassword($this->encoder->encodePassword($user, $password));
