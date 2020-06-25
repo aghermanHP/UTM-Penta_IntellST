@@ -5,30 +5,28 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Service\Register;
+use \App\Service\Register;
 
 class AuthController extends AbstractController
 {
-    /**
-     * AuthController constructor.
-     * @param Register $register
-     */
 
-    public function __construct( Register $register ) {
+    public function __construct(Register $register)
+    {
         $this->register = $register;
     }
+
     /**
      * @Route("/register", methods={"POST"})
      */
-    public function register():string
+    public function register() : string
     {
-        $this->register->register();
+        return $this->register->register();
     }
 
     /**
      * @Route("/api")
      */
-    public function api() : string
+    public function api()
     {
         return new Response(sprintf('Logged in as %s', $this->getUser()->getUsername()));
     }
