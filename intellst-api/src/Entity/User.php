@@ -122,7 +122,7 @@ class User implements UserInterface
     {
         return null;
     }
-    public function getRoles() :array
+    public function getRoles(): array
     {
         return array('ROLE_USER');
     }
