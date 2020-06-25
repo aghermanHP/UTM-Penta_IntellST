@@ -9,7 +9,10 @@ use \App\Service\Register;
 
 class AuthController extends AbstractController
 {
-
+    /**
+     * AuthController constructor.
+     * @param Register $register
+     */
     public function __construct(Register $register)
     {
         $this->register = $register;
@@ -18,7 +21,7 @@ class AuthController extends AbstractController
     /**
      * @Route("/register", methods={"POST"})
      */
-    public function register() : string
+    public function register(): string
     {
         return $this->register->register();
     }
@@ -26,7 +29,7 @@ class AuthController extends AbstractController
     /**
      * @Route("/api")
      */
-    public function api()
+    public function api(): string
     {
         return new Response(sprintf('Logged in as %s', $this->getUser()->getUsername()));
     }
