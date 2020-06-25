@@ -42,10 +42,17 @@ class IdentifiedCase
      */
     private DateTime $firstDate;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private DateTime $allowEntrance;
+
+
     public function __construct()
     {
         $this->datePhoto = new DateTime();
         $this->firstDate = new DateTime();
+        $this->allowEntrance = new DateTime();
     }
 
     public function getId(): ?int
@@ -95,5 +102,15 @@ class IdentifiedCase
     public function setFirstDate(DateTimeInterface $firstDate): void
     {
         $this->firstDate = $firstDate;
+    }
+
+    public function getAllowEntrance(): ?DateTimeInterface
+    {
+        return $this->allowEntrance;
+    }
+
+    public function setAllowEntrance(DateTimeInterface $allowEntrance): void
+    {
+        $this->allowEntrance = $allowEntrance;
     }
 }
