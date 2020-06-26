@@ -6,9 +6,12 @@ use App\Repository\EnterpriseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EnterpriseRepository::class)
+ * @UniqueEntity("name")
  */
 class Enterprise
 {
@@ -21,13 +24,33 @@ class Enterprise
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private string $name;
 
     /**
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="enterprise")
+     * @Assert\NotBlank
      */
     private $users;
+
+    /**
+     * @ORM\Column(type="float")
+     * @Assert\NotBlank
+     * @Assert\Range(
+     *      min = 34,
+     *      max = 38,
+     *      minMessage = "Enter a higher value",
+     *      maxMessage = "Enter a lower value",
+     * )
+     */
+    private float $temperature;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank
+     */
+    private int $restrictionPeriod;
 
     public function __construct()
     {
@@ -78,6 +101,30 @@ class Enterprise
                 $user->setEnterprise(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTemperature(): ?float
+    {
+        return $this->temperature;
+    }
+
+    public function setTemperature(float $temperature): self
+    {
+        $this->temperature = $temperature;
+
+        return $this;
+    }
+
+    public function getRestrictionPeriod(): ?int
+    {
+        return $this->restrictionPeriod;
+    }
+
+    public function setRestrictionPeriod(int $restrictionPeriod): self
+    {
+        $this->restrictionPeriod = $restrictionPeriod;
 
         return $this;
     }
