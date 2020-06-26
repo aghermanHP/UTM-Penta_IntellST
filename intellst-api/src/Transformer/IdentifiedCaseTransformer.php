@@ -2,6 +2,7 @@
 
 namespace App\Transformer;
 
+use App\DTO\AllowEntranceDTO;
 use App\DTO\IdentifiedCaseDTO;
 use App\Entity\IdentifiedCase;
 
@@ -28,5 +29,12 @@ class IdentifiedCaseTransformer
         $identifiedCaseDTO->firstDate = $identifiedCase->getFirstDate();
 
         return $identifiedCaseDTO;
+    }
+
+    public function transformDTOToEntityAllowEntrance(AllowEntranceDTO $dto, IdentifiedCase $identifiedCase): IdentifiedCase
+    {
+        $identifiedCase->setAllowEntrance(new \DateTime());
+
+        return $identifiedCase;
     }
 }
