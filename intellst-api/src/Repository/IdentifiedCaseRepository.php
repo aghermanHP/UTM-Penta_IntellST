@@ -24,9 +24,8 @@ class IdentifiedCaseRepository extends ServiceEntityRepository
     {
         $date = new \DateTime();
         $date->modify('-90 day');
-        return
-        $this
-            ->createQueryBuilder('IdentifiedCase')
+
+        return $this->createQueryBuilder('IdentifiedCase')
             ->delete()
             ->Where('IdentifiedCase.firstDate < :date')
             ->setParameter(':date', $date)
