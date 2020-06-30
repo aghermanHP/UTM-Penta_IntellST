@@ -7,38 +7,13 @@ use App\DTO\IdentifiedCaseDTO;
 use App\Services\IdentifiedCaseHandler;
 use App\Transformer\IdentifiedCaseTransformer;
 use DateTime;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use PHPUnit\Framework\TestCase;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Validator\Validation;
 
-class IdentifiedCaseHandlerTest extends KernelTestCase
+class IdentifiedCaseHandlerTest extends TestCase
 {
-    private $em;
-
-    public function setUp()
-    {
-        self::bootKernel();
-
-        parent::setUp();
-
-        $this->em = static::$container->get('doctrine')->getManager();
-        $this->em->getConnection()->beginTransaction();
-    }
-
-    protected function tearDown(): void
-    {
-        if ($this->em->getConnection()->isTransactionActive()) {
-            try {
-                $this->em->getConnection()->rollBack();
-            } catch (\Exception $e) {
-            }
-        }
-
-        parent::tearDown();
-
-        $this->em = null;
-    }
-
     private function getHandler(): IdentifiedCaseHandler
     {
         $repositoryMock = $this->createMock(ObjectRepository::class);
@@ -47,14 +22,14 @@ class IdentifiedCaseHandlerTest extends KernelTestCase
             ->method('getRepository')
             ->willReturn($repositoryMock);
 
+        $transformer = new IdentifiedCaseTransformer();
+        $validator = Validation::createValidatorBuilder()->enableAnnotationMapping()->getValidator();
+
         return new IdentifiedCaseHandler($emMock,
-            static::$container->get('validator'),
-            static::$container->get(IdentifiedCaseTransformer::class));
+            $validator,
+            $transformer);
     }
 
-    /**
-     * @return IdentifiedCaseDTO
-     */
     private function getIdentifiedCaseDTO(): IdentifiedCaseDTO
     {
         $dto = new IdentifiedCaseDTO();
@@ -66,9 +41,6 @@ class IdentifiedCaseHandlerTest extends KernelTestCase
         return $dto;
     }
 
-    /**
-     * @return AllowEntranceDTO
-     */
     private function getAllowEntranceDTO(): AllowEntranceDTO
     {
         $dto = new AllowEntranceDTO();
